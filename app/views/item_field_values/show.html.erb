@@ -1,0 +1,19 @@
+<h1>Item Field Value</h1>
+
+<p>
+  <strong>Item:</strong>
+  <%= @item_field_value.item.name %>
+</p>
+
+<p>
+  <strong>Item Field:</strong>
+  <%= @item_field_value.item_field.field_name %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @item_field_value.value %>
+</p>
+
+<%= link_to 'Edit', edit_item_field_value_path(@item_field_value) %> |
+<%= link_to 'Back', item_field_values_path %>

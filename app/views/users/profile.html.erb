@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="container mx-auto my-8 p-4">
+  <div class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6">
+    <h1 class="text-4xl font-bold mb-8 text-center text-gray-800">User Dashboard : <%= current_user.email %></h1>
+
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-2xl font-semibold text-gray-700">Collections</h2>
+      <%= link_to 'New Collection', new_collection_path, class: 'bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-300 ease-in-out transform hover:scale-105' %>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% @collections.each do |collection| %>
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out">
+          <img src="<%= collection.image_url %>" alt="<%= collection.name %>" class="w-full h-40 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-2"><%= collection.name %></h3>
+            <p class="text-gray-600 mb-4"><%= truncate(collection.description, length: 100) %></p>
+            <p class="text-gray-500 mb-2"><strong>Category:</strong> <%= collection.category %></p>
+            <p class="text-gray-500 mb-2"><strong>Author:</strong> <%= collection.user.username %></p>
+            <div class="flex space-x-2 mt-4">
+              <%= link_to 'Details', collection, class: 'flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-center transition duration-300 ease-in-out' %>
+              <%= link_to 'Edit', edit_collection_path(collection), class: 'flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg text-center transition duration-300 ease-in-out' %>
+              <%= button_to 'Delete', collection_path(collection), method: :delete, data: { confirm: 'Are you sure?' }, class: 'flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg text-center transition duration-300 ease-in-out' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Items, Collections, and Tags</title>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+  <style>
+      body {
+          background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+          font-family: 'Helvetica Neue', sans-serif;
+          color: #333;
+      }
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 16px;
+      }
+      .section-title {
+          margin-top: 32px;
+          margin-bottom: 24px;
+          position: relative;
+          display: inline-block;
+      }
+      .section-title:before {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 4px;
+          background: linear-gradient(135deg, #3b82f6, #10b981);
+          bottom: -8px;
+          left: 0;
+          border-radius: 2px;
+      }
+      .card {
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+      .card img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          border-radius: 8px;
+          margin-bottom: 16px;
+      }
+      .tag-link {
+          color: #3b82f6;
+          font-weight: bold;
+          text-decoration: none;
+          margin-right: 8px;
+      }
+      .tag-link:hover {
+          text-decoration: underline;
+      }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Collections Section -->
+  <section id="collections">
+    <h1 class="text-3xl font-bold text-green-700 hover:text-blue-700 section-title">TOP COLLECTIONS</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @collections.each do |collection| %>
+        <div class="card">
+          <%= link_to collection_path(collection) do %>
+            <h2 class="text-xl font-bold mb-2"><%= collection.name %></h2>
+<!--            <p class="text-gray-600 mb-2"><%#= collection.description %></p>-->
+            <p class="text-gray-600 mb-2">Category: <%= collection.category %></p>
+            <img src="<%= collection.image_url %>" alt="<%= collection.name %>" class="rounded mb-2">
+            <p class="text-gray-600 mb-4">Author: <%= collection.user.username %></p>
+            <p class="text-gray-600 mb-4">Created: <%= collection.created_at %></p>
+            <p class="text-gray-600 mb-4">Items: <%= collection.items.count %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+  <!-- End of Collections Section -->
+
+  <!-- Separator between sections -->
+  <div class="my-8"></div>
+
+  <!-- Items Section -->
+  <section id="items">
+    <h1 class="text-3xl font-bold text-green-700 hover:text-blue-700 section-title">RECENT ITEMS LIST</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @items.each do |item| %>
+        <div class="card">
+          <%= link_to collection_item_path(item.collection, item) do %>
+            <h2 class="text-xl font-bold mb-2"><%= item.name %></h2>
+            <p class="text-gray-600 mb-4">Collection: <%= item.collection.name %></p>
+            <p class="text-gray-600 mb-4">Created: <%= item.created_at %></p>
+            <% item.tags.each do |tag| %>
+              <a href="/display_tags/<%= tag.id %>" class="tag-link">@<%= tag.name %></a>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+  <!-- End of Items Section -->
+
+  <!-- Separator between sections -->
+  <div class="my-8"></div>
+
+  <!-- Tags Section -->
+  <section id="tags">
+    <h1 class="text-3xl font-bold text-green-700 hover:text-blue-700 section-title">MOST POPULAR TAGS</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @tags.each do |tag| %>
+        <div class="card">
+          <a href="/display_tags/<%= tag.id %>" class="tag-link"><%= tag.name %></a>
+        </div>
+      <% end %>
+    </div>
+  </section>
+  <!-- End of Tags Section -->
+
+</div>
+
+</body>
+</html>

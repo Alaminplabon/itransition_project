@@ -1,0 +1,27 @@
+<h1>Item Fields</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Field Name</th>
+    <th>Field Type</th>
+    <th>Collection</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @item_fields.each do |item_field| %>
+    <tr>
+      <td><%= item_field.field_name %></td>
+      <td><%= item_field.field_type %></td>
+      <td><%= item_field.collection.name %></td>
+      <td><%= link_to 'Show', item_field %></td>
+      <td><%= link_to 'Edit', edit_item_field_path(item_field) %></td>
+      <td><%= link_to 'Destroy', item_field, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Item Field', new_item_field_path %>

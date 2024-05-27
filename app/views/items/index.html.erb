@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Items, Collections, and Tags</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<div class="container mx-auto my-8 p-4">
+  <!-- Items Section -->
+  <h1 class="text-red-500 text-3xl font-bold mb-6">Items</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @items.each do |item| %>
+      <div class="bg-white p-4 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold mb-2"><%= item.name %></h2>
+        <p class="text-gray-600 mb-4">Collection: <%= item.collection.name %></p>
+        <% item.tags.each do |tag| %>
+          <a href="/display_tags/<%= tag.id %>" class="text-xl font-bold text-blue-500 hover:underline">@<%= tag.name %></a>
+      <% end %>
+        <!-- Custom Fields -->
+        <% item.item_field_values.each do |field_value| %>
+          <p class="text-gray-800"><%= field_value.item_field.name %>: <%= field_value.value %></p>
+        <% end %>
+
+        <div class="flex justify-between">
+          <%= link_to 'Show', collection_item_path(item.collection, item), class: 'text-blue-500 hover:underline' %>
+          <%#= link_to 'Edit', edit_item_path(item), class: 'text-yellow-500 hover:underline' %>
+          <%#= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-500 hover:underline' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="mt-4">
+    <%#= link_to 'New Item', new_item_path, class: 'bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600' %>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Collections Section -->
+<!--  <h1 class="text-2xl font-bold my-6">Collections</h1>-->
+<!--  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">-->
+    <%# @collections.each do |collection| %>
+<!--      <div class="bg-white p-4 rounded-lg shadow-md">-->
+<!--        <h2 class="text-xl font-bold mb-2"><%#= collection.name %></h2>-->
+<!--        <p class="text-gray-600 mb-2"><%#= collection.description %></p>-->
+<!--        <p class="text-gray-600 mb-2">Category: <%#= collection.category %></p>-->
+<!--        <img src="<%#= collection.image_url %>" alt="<%#= collection.name %>" class="w-full h-32 object-cover rounded mb-2">-->
+<!--        <p class="text-gray-600 mb-4">Author: <%#= collection.user.username %></p>-->
+<!--        <div class="flex justify-between">-->
+          <%#= link_to 'Show', collection, class: 'text-blue-500 hover:underline' %>
+          <%#= link_to 'Edit', edit_collection_path(collection), class: 'text-yellow-500 hover:underline' %>
+          <%#= link_to 'Destroy', collection, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-500 hover:underline' %>
+<!--        </div>-->
+<!--      </div>-->
+    <%# end %>
+<!--  </div>-->
+<!--  <div class="mt-4">-->
+    <%#= link_to 'New Collection', new_collection_path, class: 'bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600' %>
+<!--  </div>-->
+
+  <!-- Tags Section -->
+<!--  <h1 class="text-2xl font-bold my-6">Tags</h1>-->
+<!--  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">-->
+    <%# @tags.each do |tag| %>
+<!--      <div class="bg-white p-4 rounded-lg shadow-md">-->
+<!--        <a href="display_tags/<%#= tag.id %>" class="text-xl font-bold text-blue-500 hover:underline"><%#= tag.name %></a>-->
+<!--      </div>-->
+    <%# end %>
+<!--  </div>-->
+</div>
+
+</body>
+</html>

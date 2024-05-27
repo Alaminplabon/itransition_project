@@ -1,0 +1,54 @@
+<h2 class="text-3xl font-extrabold text-center mb-6">Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "w-full max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg transition transform hover:scale-105" }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="mb-6">
+    <%= f.label :username, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <div class="relative">
+      <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a5 5 0 100-10 5 5 0 000 10zm0 2a7 7 0 00-7 7v1h14v-1a7 7 0 00-7-7z"/></svg>
+      </span>
+      <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105" %>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <%= f.label :email, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <div class="relative">
+      <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm2 0v10h12V5H4zm1 2l5 3 5-3v1l-5 3-5-3V7z"/></svg>
+      </span>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105" %>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <%= f.label :password, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <% if @minimum_password_length %>
+      <em class="text-gray-600 text-xs">(minimum <%= @minimum_password_length %> characters)</em>
+    <% end %>
+    <div class="relative">
+      <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a5 5 0 100-10 5 5 0 000 10zm0 2a7 7 0 00-7 7v1h14v-1a7 7 0 00-7-7z"/></svg>
+      </span>
+      <%= f.password_field :password, autocomplete: "new-password", class: "shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105" %>
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <%= f.label :password_confirmation, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <div class="relative">
+      <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a5 5 0 100-10 5 5 0 000 10zm0 2a7 7 0 00-7 7v1h14v-1a7 7 0 00-7-7z"/></svg>
+      </span>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105" %>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <%= f.submit "Sign up", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transform hover:scale-105 transition-transform" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links", class: "mt-4 text-center text-sm text-gray-600" %>

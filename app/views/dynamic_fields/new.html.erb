@@ -1,0 +1,9 @@
+<%= form_with url: dynamic_fields_path, method: :post do |form| %>
+  <%= form.label :name, "Field Name" %>
+  <%= form.text_field :name %>
+
+  <%= form.label :field_type, "Field Type" %>
+  <%= form.select :field_type, options_for_select([['String', 'string'], ['Integer', 'integer'], ['Date', 'date']]) %>
+
+  <%= form.submit "Create Field" %>
+<% end %>

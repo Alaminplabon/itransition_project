@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= @collection.name %></title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+      .card {
+          background-color: #fff;
+          border-radius: 0.5rem;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+          background-color: #F3F4F6;
+          padding: 1rem;
+          border-top-left-radius: 0.5rem;
+          border-top-right-radius: 0.5rem;
+      }
+
+      .card-body {
+          padding: 1.5rem;
+      }
+
+      .action-links {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 1.5rem;
+      }
+
+      .action-links a {
+          padding: 0.75rem 1.5rem;
+          border-radius: 0.5rem;
+          text-decoration: none;
+          transition: background-color 0.3s ease;
+      }
+
+      .action-links a:hover {
+          background-color: #E5E7EB;
+      }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="container mx-auto my-8 p-4">
+  <div class="max-w-lg mx-auto">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="text-3xl font-bold text-gray-800 text-center"><%= @collection.name %></h1>
+      </div>
+      <div class="card-body">
+        <p class="text-lg text-gray-700 mb-4">
+          <strong class="font-semibold">Description:</strong> <%= @collection.description %>
+        </p>
+        <p class="text-lg text-gray-700 mb-4">
+          <strong class="font-semibold">Category:</strong> <%= @collection.category %>
+        </p>
+        <p class="text-lg text-gray-700 mb-4">
+          <strong class="font-semibold">Image Url:</strong> <%= @collection.image_url %>
+        </p>
+        <p class="text-lg text-gray-700 mb-4">
+          <strong class="font-semibold">Author:</strong> <%= @collection.user.username %>
+        </p>
+        <div class="action-links">
+          <% if can? :manage, @collection %>
+            <%= link_to 'Edit', edit_collection_path(@collection), class: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105' %>
+            <%= button_to 'Delete', collection_path(@collection), method: :delete, class: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105' %>
+          <% end %>
+          <%= link_to 'Back', collections_path, class: 'bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sorting section -->
+  <div class="max-w-lg mx-auto mt-8 p-4 bg-white rounded-lg shadow-lg">
+    <%= form_for @collection, url: collection_path(@collection), method: :get do |f| %>
+      <div id="sortForm" class="flex flex-col md:flex-row items-center justify-between">
+        <div class="flex flex-col mb-4 md:mb-0 md:mr-4">
+          <label for="sort_by" class="mb-2 text-lg font-semibold text-gray-700">Sort by:</label>
+          <select name="collection[sort_by]" id="sort_by" class="p-2 border border-gray-300 rounded-lg">
+            <option value="name">Name</option>
+            <option value="created_at">Date</option>
+          </select>
+        </div>
+        <div class="flex flex-col mb-4 md:mb-0 md:mr-4">
+          <label for="sort_direction" class="mb-2 text-lg font-semibold text-gray-700">Sort direction:</label>
+          <select name="collection[sort_direction]" id="sort_direction" class="p-2 border border-gray-300 rounded-lg">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+        <div>
+          <%= f.submit "Sort", class: "bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-600" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Item section -->
+  <h1 class="text-red-500 text-3xl font-bold mb-6">Items</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @items.each do |item| %>
+      <div class="bg-white p-4 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold mb-2"><%= item.name %></h2>
+        <div class="flex justify-between">
+          <%= link_to 'Show', collection_item_path(@collection, item), class: 'text-blue-500 hover:underline' %>
+          <% if can? :manage, @collection %>
+            <%= link_to 'Edit', edit_collection_item_path(@collection, item), class: 'text-yellow-500 hover:underline' %>
+            <%= button_to 'Destroy', collection_item_path(@collection, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-500 hover:underline' %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if can? :manage, @collection %>
+    <div class="mt-4">
+      <%= link_to 'New Item', new_collection_item_path(@collection.id), class: 'bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600' %>
+    </div>
+  <% end %>
+</div>
+</body>
+</html>

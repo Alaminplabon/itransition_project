@@ -1,0 +1,62 @@
+<%= form_with(model: @collection, local: true) do |form| %>
+  <% if @collection.errors.any? %>
+    <div id="error_explanation" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+      <h2 class="font-bold mb-2"><%= pluralize(@collection.errors.count, "error") %> prohibited this collection from
+        being saved:</h2>
+      <ul class="list-disc pl-5">
+        <% @collection.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :name, class: 'block text-gray-700 font-bold mb-2' %>
+    <%= form.text_field :name, class: 'w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :description, class: 'block text-gray-700 font-bold mb-2' %>
+    <%= form.text_area :description, class: 'w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :category, 'Description', class: 'block text-gray-700 font-bold mb-2' %>
+    <%= form.select :category, options_for_select([['Books', 'books'], ['Signs', 'signs'], ['Silverware', 'silverware'], ['Other', 'other']]), {}, class: 'w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' %>
+  </div>
+
+
+  <div class="mb-4">
+    <%= form.label :image_url, class: 'block text-gray-700 font-bold mb-2' %>
+    <%= form.text_field :image_url, class: 'w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' %>
+  </div>
+
+  <div>
+    <div id="options">
+      <%= hidden_field_tag "collection[dynamic_field]" %>
+
+    </div>
+    <div id="dynamic-input-container"></div>
+    <button onclick="handleDynamicField(event)" class="underline text-[#775DA6] my-4">Add custom value</button>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit 'Save', class: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105' %>
+  </div>
+<% end %>
+
+<div class="mb-4">
+  <% if @collection.dynamic_field.nil? ||  @collection.dynamic_field.empty? %>
+    <p>NO Fields Added..</p>
+  <% else %>
+    <% @collection.dynamic_field.each do |key, value| %>
+      <div class="flex justify-between items-center">
+        <p><%= key %>: <%= value %></p>
+        <%= button_to 'X', "/remove_dynamic_fields/#{@collection.id}?key=#{key}&value=#{value}", method: :delete, class:"block" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<%= javascript_include_tag "application" %>

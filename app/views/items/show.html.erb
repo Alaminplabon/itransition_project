@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= @item.name %></title>
+  <style>
+      /* Custom Styles */
+      .card {
+          background-color: #fff;
+          border-radius: 0.5rem;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+          background-color: #F3F4F6;
+          padding: 1rem;
+          border-top-left-radius: 0.5rem;
+          border-top-right-radius: 0.5rem;
+      }
+
+      .card-body {
+          padding: 1.5rem;
+      }
+
+      .action-links {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 1.5rem;
+      }
+
+      .action-links a {
+          padding: 0.75rem 1.5rem;
+          border-radius: 0.5rem;
+          text-decoration: none;
+          transition: background-color 0.3s ease;
+      }
+
+      .action-links a:hover {
+          background-color: #E5E7EB;
+      }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="container mx-auto my-8 p-4">
+  <div class="max-w-lg mx-auto">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="text-3xl font-bold text-gray-800 text-center"><%= @item.name %></h1>
+      </div>
+      <div class="card-body">
+        <p class="text-lg text-gray-700 mb-4">
+          <strong class="font-semibold">Collection:</strong> <%= @item.collection.name %>
+        </p>
+
+        <% if @item.dynamic_fields.nil? %>
+          <p>no custom filled added</p>
+        <% else %>
+          <% @item.dynamic_fields.each do |key, value| %>
+            <p class="text-lg text-gray-700 mb-4">
+              <strong class="font-semibold"><%= key %>:</strong> <%= value %>
+            </p>
+          <% end %>
+        <% end %>
+        <!--        tags-->
+        <% if @item.tags.nil? %>
+          <p></p>
+        <% else %>
+          <!-- Tags Section -->
+          <h1 class="text-2xl font-bold my-6">Tags</h1>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% @item.tags.each do |tag| %>
+              <div class="bg-white p-4 rounded-lg shadow-md">
+                <a href="/display_tags/<%= tag.id %>" class="text-xl font-bold text-blue-500 hover:underline"><%= tag.name %></a>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <!-- Custom Fields -->
+        <% @item.item_field_values.each do |field_value| %>
+          <p class="text-gray-800"><%= field_value.item_field.name %>: <%= field_value.value %></p>
+        <% end %>
+
+        <div class="action-links">
+          <% if can? :manage, @collection %>
+            <%= link_to 'Edit', edit_collection_item_path(@collection, @item), class: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105' %>
+          <% end %>
+          <%= link_to 'Back', collection_items_path(@collection), class: 'bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105' %>
+        </div>
+      </div>
+      <div class="mt-8">
+        <h2 class="text-2xl font-bold mb-4">Comments</h2>
+        <div id="comments">
+          <% @item.comments.each do |comment| %>
+            <div class="flex">
+              <% if comment.user %>
+                <p> <%= comment.user.username %>: </p>
+              <% end %>
+              <p class="ml-2">  <%= comment.content %></p>
+            </div>
+
+          <% end %>
+        </div>
+
+        <% if can? :manage, Comment %>
+          <%= form_for @comment, url: collection_item_comments_path(@collection, @item), method: :post do |form| %>
+            <div class="mt-4">
+              <%= form.text_area :content, rows: 3, class: "w-full p-2 border border-gray-300 rounded" %>
+            </div>
+            <div class="mt-2">
+              <%= form.submit "Add Comment", class: "bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="mt-8">
+        <h2 class="text-2xl font-bold mb-4">Likes</h2>
+        <div id="likes" class="flex items-center">
+          <% if can? :manage, Like %>
+            <%= button_to collection_item_likes_path(@collection, @item), method: :post, remote: true, class: "bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" do %>
+              Like
+            <% end %>
+          <% end %>
+          <p class="ml-4"><%= @item.likes.count %> Likes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

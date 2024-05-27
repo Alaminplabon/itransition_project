@@ -1,0 +1,14 @@
+<h1>Item Tag</h1>
+
+<p>
+  <strong>Item:</strong>
+  <%= @item_tag.item.name %>
+</p>
+
+<p>
+  <strong>Tag:</strong>
+  <%= @item_tag.tag.name %>
+</p>
+
+<%= link_to 'Edit', edit_item_tag_path(@item_tag) %> |
+<%= link_to 'Back', item_tags_path %>

@@ -1,0 +1,19 @@
+<h1>Item Field</h1>
+
+<p>
+  <strong>Field Name:</strong>
+  <%= @item_field.field_name %>
+</p>
+
+<p>
+  <strong>Field Type:</strong>
+  <%= @item_field.field_type %>
+</p>
+
+<p>
+  <strong>Collection:</strong>
+  <%= @item_field.collection.name %>
+</p>
+
+<%= link_to 'Edit', edit_item_field_path(@item_field) %> |
+<%= link_to 'Back', item_fields_path %>

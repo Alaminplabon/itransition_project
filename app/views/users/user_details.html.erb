@@ -1,0 +1,26 @@
+<%= form_for @user, url: "/manage_user/#{@user.id}", method: :post do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation" class="mb-6 bg-red-50 border-l-4 border-red-400 p-4 text-red-700 rounded">
+      <h2 class="font-bold mb-2"><%= pluralize(@user.errors.count, "error") %> prohibited this item from being saved:</h2>
+      <ul class="list-disc list-inside">
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= f.label :is_block, "Block or Unblock User", class: "block text-gray-700 font-semibold mb-2" %>
+    <%= f.select :is_block, options_for_select([['Block', true], ['Unblock', false]], @user.is_block), class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :is_admin, "Add or Remove Admin Privileges", class: "block text-gray-700 font-semibold mb-2" %>
+    <%= f.select :is_admin, options_for_select([['Add Admin', true], ['Add User', false]], @user.is_admin), class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+  </div>
+
+  <div class="mt-6">
+    <%= f.submit "Save", class: "w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105" %>
+  </div>
+<% end %>

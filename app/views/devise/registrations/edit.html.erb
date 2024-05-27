@@ -1,0 +1,67 @@
+<h2 class="text-3xl font-extrabold text-center mb-6">Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "w-full max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg transition transform hover:scale-105" }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="mb-6">
+    <%= f.label :email, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <div class="relative">
+      <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm2 0v10h12V5H4zm1 2l5 3 5-3v1l-5 3-5-3V7z"/></svg>
+      </span>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105" %>
+    </div>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div class="mb-6 text-gray-600 text-sm">
+      Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+    </div>
+  <% end %>
+
+  <div class="mb-6">
+    <%= f.label :password, class: "block text-gray-700 text-sm font-bold mb-2" %> <i class="text-gray-600 text-xs">(leave blank if you don't want to change it)</i>
+    <div class="relative mt-1">
+      <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M5 8a5 5 0 1110 0v4a1 1 0 001 1h1a1 1 0 110 2H3a1 1 0 110-2h1a1 1 0 001-1V8zm7 4a3 3 0 00-6 0v3h6v-3z"/></svg>
+      </span>
+      <%= f.password_field :password, autocomplete: "new-password", class: "shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105" %>
+      <% if @minimum_password_length %>
+        <em class="text-gray-600 text-xs mt-1 block"><%= @minimum_password_length %> characters minimum</em>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <%= f.label :password_confirmation, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <div class="relative">
+      <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M5 8a5 5 0 1110 0v4a1 1 0 001 1h1a1 1 0 110 2H3a1 1 0 110-2h1a1 1 0 001-1V8zm7 4a3 3 0 00-6 0v3h6v-3z"/></svg>
+      </span>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105" %>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <%= f.label :current_password, class: "block text-gray-700 text-sm font-bold mb-2" %> <i class="text-gray-600 text-xs">(we need your current password to confirm your changes)</i>
+    <div class="relative mt-1">
+      <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M5 8a5 5 0 1110 0v4a1 1 0 001 1h1a1 1 0 110 2H3a1 1 0 110-2h1a1 1 0 001-1V8zm7 4a3 3 0 00-6 0v3h6v-3z"/></svg>
+      </span>
+      <%= f.password_field :current_password, autocomplete: "current-password", class: "shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105" %>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <%= f.submit "Update", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transform hover:scale-105 transition-transform" %>
+  </div>
+<% end %>
+
+<h3 class="text-xl font-bold mt-8">Cancel my account</h3>
+
+<div class="text-gray-600 mt-2">
+  Unhappy?
+  <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transform hover:scale-105 transition-transform mt-4" %>
+</div>
+
+<%= link_to "Back", :back, class: "block mt-4 text-blue-500 hover:text-blue-700 text-sm font-semibold" %>
