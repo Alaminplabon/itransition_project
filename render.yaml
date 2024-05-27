@@ -1,7 +1,7 @@
 databases:
   - name: itransition_project
     databaseName: new_collection_production
-    user: postgres
+    user: postgresql
     plan: free
 
 services:
