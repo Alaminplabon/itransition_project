@@ -1,4 +1,4 @@
-<%= form_for  item, url: collection_items_path(collection),method: :post, html: { multipart: true } , class: "w-full"  do |form| %>
+<%= form_for  item, url: collection_item_path(collection, item),method: :patch, html: { multipart: true } , class: "w-full"  do |form| %>
   <% if item.errors.any? %>
     <div id="error_explanation" class="mb-6 bg-red-50 border-l-4 border-red-400 p-4 text-red-700 rounded">
       <h2 class="font-bold mb-2"><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
@@ -16,15 +16,47 @@
   </div>
 
   <div class="mb-4">
-    <% parsed_data = @collection.dynamic_field %>
-      <% parsed_data.each do |key,value| %>
-        <div>
-          <p><%= value %>: (<%= key %>)</p>
-          <input type="<%= value %>">
-        </div>
-      <% end %>
-     </div>
+    <label for="tags" class="block text-gray-700 font-bold mb-2">Tags</label>
+    <div class="wrapper">
+      <div class="inserted-values"></div>
+      <input type="text" name='item[tags][]' id="choice-input" class="choices w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Add a tag and press Enter">
+      <select id="tags" class="choices w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <!-- Dynamically populate options -->
+        <% item.tags.each do |tag| %>
+          <option value="<%= tag.name %>"><%= tag.name %></option>
+        <% end %>
+      </select>
+      <input type="hidden" name="item[tags]" id="tags-hidden-input" value='[]'>
+    </div>
+  </div>
 
+  <div class="mb-4">
+    <% parsed_data = collection.dynamic_field %>
+    <% if parsed_data.empty? %>
+      <p>There is no dynamic fields..</p>
+    <% else %>
+      <% case parsed_data %>
+    <% when Hash %>
+        <% parsed_data.each do |key, value| %>
+          <div>
+            <p><%= value %>: (<%= key %>)</p>
+            <input type="<%= key %>" name="item[<%= value %>]">
+          </div>
+        <% end %>
+      <% else %>
+
+        <% json_data = JSON.parse(parsed_data) %>
+        <% json_data.each do |item| %>
+          <% item.each do |key, value| %>
+            <div>
+              <p><%= value %>: (<%= key %>)</p>
+              <input type="<%= key %>" name="item[<%= value %>]">
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
   <div class="mt-6">
     <%= form.submit "Save", class: "w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105" %>
   </div>

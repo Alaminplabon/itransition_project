@@ -11,12 +11,12 @@
   <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">Editing Item</h1>
 
   <div class="bg-white rounded-lg shadow-lg p-8">
-    <%= render 'form', item: @item %>
+    <%= render 'form', item: @item,collection:@collection %>
   </div>
 
   <div class="flex justify-center mt-6">
-    <%= link_to 'Show', @item, class: 'inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg mr-4 transition duration-300 ease-in-out transform hover:scale-105' %>
-    <%= link_to 'Back', items_path, class: 'inline-block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105' %>
+    <%= link_to 'Show', collection_item_path(@collection, @item), class: 'inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg mr-4 transition duration-300 ease-in-out transform hover:scale-105' %>
+    <%= link_to 'Back', collection_path(@collection), class: 'inline-block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105' %>
   </div>
 </div>
 </body>

@@ -41,13 +41,29 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    @collection = Collection.find_by(id: params[:collection_id])
+    @item = @collection.items.find_by(id: params[:id])
   end
 
   def update
-    if @item.update(item_params)
-      redirect_to @item, notice: 'Item was successfully updated.'
+    @item = Item.find_by(id: params[:id])
+    if params[:item][:tags]
+      tags = JSON.parse(params[:item][:tags])
+      tag_objects = tags.map do |tag_name|
+        Tag.find_or_create_by(name: tag_name)
+      end
+      @item.tags = tag_objects
+    end
+    @item.name = item_params[:name]
+    collection_id = params[:collection_id].to_i
+    @item.collection_id = collection_id
+    @item.user = current_user
+    @item.dynamic_fields = params[:item].except('name', 'tags')
+
+    if @item.save
+      redirect_to collection_path(@item.collection), notice: 'Item was successfully updated.'
     else
-      render :edit
+      render :new
     end
   end
 

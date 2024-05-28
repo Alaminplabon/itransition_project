@@ -1,21 +1,21 @@
 databases:
-  - name: itransition_project
-    databaseName: new_collection_production
-    user: postgresql
+  - name: mysite
+    databaseName: mysite
+    user: mysite
     plan: free
 
 services:
   - type: web
-    name: itransition_project
+    name: mysite
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
     # preDeployCommand: "bundle exec rails db:migrate" # preDeployCommand only available on paid instance types
     startCommand: "bundle exec rails server"
     envVars:
-      - key: new_collection_production
+      - key: DATABASE_URL
         fromDatabase:
-          name: new_collection_production
+          name: mysite
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
