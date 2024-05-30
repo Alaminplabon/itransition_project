@@ -1,5 +1,2 @@
-#Item.create!(name: "Item 1", collection_id: 14,hash_tag: "plabon")
+User.create(username: "root", is_admin:true, email: "root@gmail.com", password: 111111)
 
-t = Tag.create(name:'hello')
-i = Item.create!(name: "Item 11", collection_id: 14)
-ItemTag.create!(item: i, tag: t)
