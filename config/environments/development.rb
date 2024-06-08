@@ -73,4 +73,10 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+
+  # JIRA Integration Configuration
+  config.jira_endpoint = "https://alaminbiswasplabon.atlassian.net/jira/servicedesk/projects/IP/queues/custom/4"
+  config.jira_username = "alaminbiswasplabon98@gmail.com"
+  config.jira_password = "ATATT3xFfGF0mMj_hgwpBd3dCZ4747ODrd5iDO_1D2zPFcUaopISEiFG_ARuVORm07qgLfxUC8J25HPNc-k49jwSsz2zm06NlwCXmMSX6pY8Kj6F8wFIxO7jHu5kQ37B2h2lHZh3X5tvleFJN327GVZZjhJZGF7Vdg1m3dt3PLmimAhbqmIwV6Y=B3C57BCD"
 end

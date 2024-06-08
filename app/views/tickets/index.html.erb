@@ -1,0 +1,24 @@
+<h1>My Tickets</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Summary</th>
+    <th>Priority</th>
+    <th>Status</th>
+    <th>JIRA Link</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @tickets.each do |ticket| %>
+    <tr>
+      <td><%= ticket.summary %></td>
+      <td><%= ticket.priority %></td>
+      <td><%= ticket.status %></td>
+      <td><%= link_to 'View in JIRA', "https://alaminbiswasplabon.atlassian.net/jira/servicedesk/projects/IP/queues/custom/4#{ticket.jira_key}", target: '_blank' %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @tickets %>

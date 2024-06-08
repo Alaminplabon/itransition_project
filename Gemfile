@@ -72,3 +72,5 @@ gem "tailwindcss-rails", "~> 2.6"
 gem 'cancancan'
 gem 'pry', '~> 0.14.2'
 gem 'pg_search'
+gem 'jira-ruby'
+gem 'figaro'

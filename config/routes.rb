@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+  get 'tickets/new'
+  get 'tickets/create'
+  get 'tickets/index'
   devise_for :users
+  resources :tickets, only: [:new, :create, :index]
   resources :collections do
     resources :items do
       resources :comments, only: [:create]
